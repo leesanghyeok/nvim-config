@@ -58,6 +58,8 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+local terraform_validate_wrapped = false
+
 return {
   -- The lang.terraform extra installs tflint via mason but only wires
   -- terraform_validate into nvim-lint, so tflint never actually runs. Add it.
@@ -75,6 +77,40 @@ return {
         end
         opts.linters_by_ft[ft] = list
       end
+
+      -- Upstream terraform_validate runs from nvim's cwd and points terraform
+      -- at the module via -chdir. Run it from the file's directory instead so
+      -- mise's shim resolves the project-pinned terraform version (see
+      -- plugins/integrations/mise.lua). Validation output is unchanged:
+      -- filenames are reported relative to the module dir either way.
+      if not terraform_validate_wrapped then
+        terraform_validate_wrapped = true
+        local lint = require("lint")
+        local upstream = lint.linters.terraform_validate
+        lint.linters.terraform_validate = function()
+          local linter = upstream()
+          linter.cwd = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+          linter.args = { "validate", "-json" }
+          return linter
+        end
+      end
     end,
+  },
+
+  -- Same cwd treatment for `terraform fmt`: run from the file's directory so
+  -- the shim picks the project-pinned version (fmt reads stdin, so cwd only
+  -- affects version resolution).
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters = {
+        terraform_fmt = {
+          cwd = function(_, ctx)
+            return vim.fs.dirname(ctx.filename)
+          end,
+        },
+      },
+    },
   },
 }
