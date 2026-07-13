@@ -42,6 +42,7 @@ require("lazy").setup({
     { import = "plugins.ui.dashboard" },
 
     --- MISC
+    { import = "plugins.diagnostics" },
     { import = "plugins.editor" },
     { import = "plugins.image" },
 
