@@ -19,6 +19,14 @@ keymap("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Go to Left Window" })
 keymap("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "Go to Lower Window" })
 keymap("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "Go to Upper Window" })
 keymap("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Go to Right Window" })
+keymap("n", "<C-ㅗ>", "<C-w>h", { desc = "Go to Left Window" })
+keymap("n", "<C-ㅓ>", "<C-w>j", { desc = "Go to Lower Window" })
+keymap("n", "<C-ㅏ>", "<C-w>k", { desc = "Go to Upper Window" })
+keymap("n", "<C-ㅣ>", "<C-w>l", { desc = "Go to Right Window" })
+keymap("t", "<C-ㅗ>", "<C-\\><C-n><C-w>h", { desc = "Go to Left Window" })
+keymap("t", "<C-ㅓ>", "<C-\\><C-n><C-w>j", { desc = "Go to Lower Window" })
+keymap("t", "<C-ㅏ>", "<C-\\><C-n><C-w>k", { desc = "Go to Upper Window" })
+keymap("t", "<C-ㅣ>", "<C-\\><C-n><C-w>l", { desc = "Go to Right Window" })
 
 
 --[[
