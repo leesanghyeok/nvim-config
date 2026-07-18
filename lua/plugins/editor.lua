@@ -68,6 +68,34 @@ return {
       close_if_last_window = true,
       enable_git_status = true,
       enable_diagnostics = true,
+      event_handlers = {
+        {
+          event = "vim_buffer_enter",
+          handler = function(args)
+            local utils = require("neo-tree.utils")
+            local manager = require("neo-tree.sources.manager")
+            local renderer = require("neo-tree.ui.renderer")
+
+            if not utils.is_real_file(args.afile) then
+              return
+            end
+
+            local state = manager.get_state("filesystem")
+            local file = utils.normalize_path(args.afile)
+            if not state.path or not renderer.window_exists(state) or not utils.is_subpath(state.path, file) then
+              return
+            end
+
+            require("neo-tree.command").execute({
+              source = "filesystem",
+              action = "show",
+              position = state.current_position or "left",
+              dir = state.path,
+              reveal_file = file,
+            })
+          end,
+        },
+      },
       filesystem = {
         -- 2-way binding between vim's cwd and neo-tree's root
         bind_to_cwd = false,
@@ -80,8 +108,8 @@ return {
         follow_current_file = {
           -- This will find and focus the file in the active buffer every time the current file is changed while the tree is open.
           enabled = true,
-          -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
-          leave_dirs_open = false,
+          -- 버퍼 이동으로 현재 파일을 reveal할 때 접힌 부모 디렉터리를 다시 열어둔다.
+          leave_dirs_open = true,
         },
       },
       popup_border_style = "NC",
