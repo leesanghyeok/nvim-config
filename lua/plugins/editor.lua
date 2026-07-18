@@ -1,3 +1,26 @@
+local neotree_focus_ns = vim.api.nvim_create_namespace("StarkNeoTreeFocus")
+local neotree_focus_file
+
+local function mark_neotree_focus(state)
+  if not state.bufnr or not vim.api.nvim_buf_is_valid(state.bufnr) or not state.tree then
+    return
+  end
+
+  vim.api.nvim_buf_clear_namespace(state.bufnr, neotree_focus_ns, 0, -1)
+  if not neotree_focus_file then
+    return
+  end
+
+  if not state.winid or not vim.api.nvim_win_is_valid(state.winid) then
+    return
+  end
+
+  local line = vim.api.nvim_win_get_cursor(state.winid)[1]
+  vim.api.nvim_buf_set_extmark(state.bufnr, neotree_focus_ns, line - 1, 0, {
+    line_hl_group = "NeoTreeCursorLine",
+  })
+end
+
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -98,6 +121,11 @@ return {
               return
             end
 
+            neotree_focus_file = file
+            if state.bufnr and vim.api.nvim_buf_is_valid(state.bufnr) then
+              vim.api.nvim_buf_clear_namespace(state.bufnr, neotree_focus_ns, 0, -1)
+            end
+
             require("neo-tree.command").execute({
               source = "filesystem",
               action = "show",
@@ -105,6 +133,19 @@ return {
               dir = state.path,
               reveal_file = file,
             })
+            vim.defer_fn(function()
+              mark_neotree_focus(manager.get_state("filesystem"))
+            end, 1200)
+          end,
+        },
+        {
+          event = "neo_tree_buffer_enter",
+          handler = function(args)
+            local bufnr = args and args.bufnr or vim.api.nvim_get_current_buf()
+            neotree_focus_file = nil
+            if vim.api.nvim_buf_is_valid(bufnr) then
+              vim.api.nvim_buf_clear_namespace(bufnr, neotree_focus_ns, 0, -1)
+            end
           end,
         },
       },
