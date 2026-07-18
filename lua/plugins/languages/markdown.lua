@@ -78,15 +78,26 @@ return {
     },
     opts = {
       events = {
-        -- focus 이동마다 mmdc가 다시 돌지 않도록 저장/읽기 시점 위주로만 렌더링한다.
-        render_buffer = { "BufReadPost", "BufWritePost" },
-        clear_buffer = { "BufDelete", "BufWipeout" },
+        -- markdown을 열면 Mermaid block을 자동으로 렌더링한다.
+        -- <leader>cm은 커서 위치 diagram을 별도 탭에서 크게 볼 때 쓴다.
+        render_buffer = { "BufWinEnter", "InsertLeave", "TextChanged" },
+        clear_buffer = { "BufLeave" },
       },
       renderer_options = {
         mermaid = {
           theme = "dark",
           scale = 2,
         },
+      },
+    },
+    keys = {
+      {
+        "<leader>cm",
+        function()
+          require("diagram").show_diagram_hover()
+        end,
+        ft = "markdown",
+        desc = "Markdown Mermaid Diagram",
       },
     },
   },
