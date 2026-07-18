@@ -66,7 +66,6 @@ return {
         build = false,
         opts = {
           backend = "kitty",
-          kitty_method = "unicode-placeholders",
           processor = "magick_cli",
           integrations = {
             markdown = {
