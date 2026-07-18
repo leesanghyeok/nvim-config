@@ -8,6 +8,18 @@ return {
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
+    init = function()
+      local function set_neotree_highlights()
+        -- Files 탭에서 현재 버퍼로 reveal된 행이 inactive window에서도 분명히 보이게 한다.
+        vim.api.nvim_set_hl(0, "NeoTreeCursorLine", { bg = "#3a3f4b", bold = true })
+      end
+
+      set_neotree_highlights()
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        group = vim.api.nvim_create_augroup("StarkNeoTreeHighlights", { clear = true }),
+        callback = set_neotree_highlights,
+      })
+    end,
     lazy = false,
     cmd = "Neotree",
     keys = {
