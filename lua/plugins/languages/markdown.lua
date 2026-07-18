@@ -57,4 +57,46 @@ return {
     },
     ft = { "markdown" },
   },
+  {
+    "3rd/diagram.nvim",
+    ft = { "markdown" },
+    dependencies = {
+      {
+        "3rd/image.nvim",
+        build = false,
+        opts = {
+          backend = "kitty",
+          processor = "magick_cli",
+          integrations = {
+            markdown = {
+              enabled = false,
+            },
+          },
+        },
+      },
+    },
+    opts = {
+      events = {
+        -- render-markdown.nvim과 동시에 자동 extmark를 많이 만들지 않도록 수동 렌더링만 쓴다.
+        render_buffer = {},
+        clear_buffer = { "BufLeave" },
+      },
+      renderer_options = {
+        mermaid = {
+          theme = "dark",
+          scale = 2,
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>cm",
+        function()
+          require("diagram").show_diagram_hover()
+        end,
+        ft = "markdown",
+        desc = "Markdown Mermaid Diagram",
+      },
+    },
+  },
 }
