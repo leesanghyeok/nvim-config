@@ -58,6 +58,7 @@ require("lazy").setup({
 
     --- Integrations
     { import = "plugins.integrations.mise" },
+    { import = "plugins.integrations.overseer" },
     { import = "plugins.integrations.wakatime" },
   },
   defaults = {
