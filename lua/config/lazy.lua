@@ -37,6 +37,7 @@ require("lazy").setup({
     -- import/override with your plugins
 
     --- UI
+    { import = "plugins.ui.bufferline" },
     { import = "plugins.ui.colorschemes" },
     { import = "plugins.ui.dashboard" },
 
