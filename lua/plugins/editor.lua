@@ -12,7 +12,6 @@ return {
       local function set_neotree_highlights()
         -- Files 탭에서 현재 버퍼로 reveal된 행이 inactive window에서도 분명히 보이게 한다.
         vim.api.nvim_set_hl(0, "NeoTreeCursorLine", { bg = "#3a3f4b", bold = true })
-        vim.api.nvim_set_hl(0, "NeoTreeCurrentBuffer", { fg = "#dbbc7f", bg = "#3a3f4b", bold = true })
       end
 
       set_neotree_highlights()
@@ -112,19 +111,6 @@ return {
       filesystem = {
         -- 2-way binding between vim's cwd and neo-tree's root
         bind_to_cwd = false,
-        components = {
-          name = function(config, node, state)
-            local component = require("neo-tree.sources.common.components").name(config, node, state)
-            local current_file = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-
-            if current_file ~= "" and node.path == current_file then
-              -- editor에서 버퍼를 이동해도 현재 버퍼 파일명 자체가 눈에 띄게 한다.
-              component.highlight = "NeoTreeCurrentBuffer"
-            end
-
-            return component
-          end,
-        },
         filtered_items = {
           -- Display differently than normal items
           visible = true,
