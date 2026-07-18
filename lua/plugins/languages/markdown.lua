@@ -77,9 +77,8 @@ return {
     },
     opts = {
       events = {
-        -- markdown을 열면 Mermaid block을 자동으로 렌더링한다.
-        -- <leader>cm은 커서 위치 diagram을 별도 탭에서 크게 볼 때 쓴다.
-        render_buffer = { "BufWinEnter", "InsertLeave", "TextChanged" },
+        -- render-markdown.nvim과 동시에 자동 extmark를 많이 만들지 않도록 수동 렌더링만 쓴다.
+        render_buffer = {},
         clear_buffer = { "BufLeave" },
       },
       renderer_options = {
