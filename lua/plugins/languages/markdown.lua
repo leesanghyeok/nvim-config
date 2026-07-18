@@ -2,9 +2,10 @@ return {
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = function()
-      require("lazy").load({ plugins = { "markdown-preview.nvim" } })
-      vim.fn["mkdp#util#install"]()
+    build = "cd app && npm install",
+    init = function()
+      -- markdown 파일에서만 preview 명령/키맵을 노출한다.
+      vim.g.mkdp_filetypes = { "markdown" }
     end,
     keys = {
       {
@@ -14,9 +15,6 @@ return {
         desc = "Markdown Preview",
       },
     },
-    config = function()
-      -- markdown 파일에서만 preview 명령/키맵을 다시 계산한다.
-      vim.cmd([[do FileType]])
-    end,
+    ft = { "markdown" },
   },
 }
