@@ -80,7 +80,8 @@ return {
       events = {
         -- focus 이동마다 mmdc가 다시 돌지 않도록 저장/읽기 시점 위주로만 렌더링한다.
         render_buffer = { "BufReadPost", "BufWritePost" },
-        clear_buffer = { "BufDelete", "BufWipeout" },
+        -- buffer를 떠날 때 terminal image layer를 지워서 stale diagram이 따라오지 않게 한다.
+        clear_buffer = { "BufLeave", "BufDelete", "BufWipeout" },
       },
       renderer_options = {
         mermaid = {
