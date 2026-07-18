@@ -66,7 +66,7 @@ return {
         build = false,
         opts = {
           backend = "kitty",
-          kitty_method = "unicode-placeholders",
+          kitty_method = "normal",
           processor = "magick_cli",
           integrations = {
             markdown = {
@@ -90,5 +90,23 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      local image = require("image")
+      local from_file = image.from_file
+
+      image.from_file = function(path, image_opts, ...)
+        -- diagram.nvim은 with_virtual_padding을 강제로 켜서 cursor 아래에 보조 박스를 만든다.
+        -- 실제 Kitty image만 남기고 따라다니는 padding 영역은 만들지 않는다.
+        if image_opts and image_opts.inline and image_opts.with_virtual_padding and image_opts.render_offset_top == 1 then
+          image_opts = vim.tbl_extend("force", image_opts, {
+            overlap = 10000,
+          })
+        end
+
+        return from_file(path, image_opts, ...)
+      end
+
+      require("diagram").setup(opts)
+    end,
   },
 }
