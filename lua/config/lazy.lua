@@ -51,6 +51,7 @@ require("lazy").setup({
 
     --- Languages
     { import = "plugins.languages.lua" },
+    { import = "plugins.languages.markdown" },
     { import = "plugins.languages.yaml" },
 
     --- AI
