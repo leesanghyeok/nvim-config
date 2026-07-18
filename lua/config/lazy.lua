@@ -49,6 +49,7 @@ require("lazy").setup({
     { import = "plugins.git" },
 
     --- Languages
+    { import = "plugins.languages.lua" },
     { import = "plugins.languages.yaml" },
 
     --- AI
