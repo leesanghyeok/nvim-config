@@ -17,8 +17,8 @@ end
 
 return {
   -- mason prepends its bin dir to PATH by default, which shadows mise-managed
-  -- tools that mason also installs (e.g. tflint). Append instead so mise (and
-  -- other system) tools win and mason only fills the gaps (terraform-ls etc.).
+  -- tools that mason also installs. Append instead so mise (and other system)
+  -- tools win and mason only fills the gaps.
   {
     "mason-org/mason.nvim",
     optional = true,
