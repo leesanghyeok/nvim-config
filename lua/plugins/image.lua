@@ -6,10 +6,11 @@ return {
     opts = {
       image = {
         doc = {
-          -- Show the image under the cursor in a float instead of
-          -- rendering every image in the document inline
+          -- markdown의 mermaid/math/image block 위에서 커서 이동만으로
+          -- floating image preview가 뜨지 않게 한다.
+          enabled = false,
           inline = false,
-          float = true,
+          float = false,
         },
       },
     },
