@@ -46,6 +46,8 @@ return {
     init = function()
       -- markdown 파일에서만 preview 명령/키맵을 노출한다.
       vim.g.mkdp_filetypes = { "markdown" }
+      -- 긴 diagram이 900px preview 폭에 맞춰 축소되지 않게 한다.
+      vim.g.mkdp_markdown_css = vim.fn.expand("~/.config/nvim/markdown-preview.css")
     end,
     keys = {
       {

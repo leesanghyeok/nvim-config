@@ -1,0 +1,19 @@
+#page-ctn {
+  max-width: none;
+  width: max-content;
+  min-width: 100%;
+}
+
+.markdown-body {
+  max-width: none;
+  overflow-x: auto;
+}
+
+.markdown-body svg {
+  max-width: none;
+}
+
+.markdown-body p,
+.markdown-body div {
+  overflow-x: auto;
+}
