@@ -15,8 +15,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Use LazyVim's snacks.explorer default for the main explorer mappings.
--- The custom neo-tree config stays available for git/buffer explorer commands.
+-- Use LazyVim's snacks.explorer default for explorer mappings.
 vim.g.lazyvim_explorer = "snacks"
 
 require("lazy").setup({
@@ -40,7 +39,6 @@ require("lazy").setup({
 
     --- MISC
     { import = "plugins.diagnostics" },
-    { import = "plugins.editor" },
     { import = "plugins.image" },
 
     --- Git
