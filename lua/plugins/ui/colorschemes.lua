@@ -1,8 +1,20 @@
 return {
   {
-    "sainnhe/everforest",
+    "catppuccin/nvim",
+    name = "catppuccin",
     lazy = false, -- Make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- Make sure to load this before all the other start plugins
+    opts = {
+      flavour = "frappe",
+    },
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
+      vim.cmd.colorscheme("catppuccin-frappe")
+    end,
+  },
+  {
+    "sainnhe/everforest",
+    lazy = true,
     config = function()
       -- The configuration options should be placed before `colorscheme` command
       vim.opt.background = "dark"
