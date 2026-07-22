@@ -6,7 +6,7 @@ end
 local options = {
   opt = {
     number = true, -- Line numbers on
-    relativenumber = true, -- Enable relative number for line (Constantly computing the relative nubmers is expensive)
+    relativenumber = false, -- Keep absolute line numbers instead of relative numbers
     signcolumn = "yes", -- Always show signcolumns
 
     breakindent = true, -- Every wrapped line will continue visually indented, thus preserving horizontal blocks of text.
